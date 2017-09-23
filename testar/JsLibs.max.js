@@ -812,8 +812,10 @@ var Laya=window.Laya=(function(window,document){
 
 		__proto.camaraLoaded=function(){
 			this.videoScaleRate=Browser.pixelRatio;
-			this.arController=new ARController(this.video.videoWidth,this.video.videoHeight,this.camaraParam);
-			Laya.timer.frameLoop(1,this,this.loop);
+			var cScale=NaN;
+			cScale=0.25;
+			this.arController=new ARController(this.video.videoWidth*cScale,this.video.videoHeight*cScale,this.camaraParam);
+			Laya.timer.frameLoop(5,this,this.loop);
 		}
 
 		__proto.loop=function(){

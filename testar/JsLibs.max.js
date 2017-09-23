@@ -702,6 +702,7 @@ var Laya=window.Laya=(function(window,document){
 			Laya.alertGlobalError=true;
 			Laya.stage.bgColor=null;
 			Stat.show();
+			DebugTxt.init();
 			this.markSp=new Sprite();
 			this.markSp.graphics.drawCircle(0,0,50,"#ff0000");
 			this.markSp.pos(0,0);
@@ -825,8 +826,11 @@ var Laya=window.Laya=(function(window,document){
 				var mark;
 				mark=this.arController.getMarker(0);
 				this.updateMark(mark);
+				DebugTxt.show("getMarker");
 			}
-			else {}
+			else {
+				DebugTxt.show(" not getMarker");
+			}
 		}
 
 		//arController.debugDraw();

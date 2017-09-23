@@ -734,9 +734,13 @@ var Laya=window.Laya=(function(window,document){
 					navigator.getUserMedia({'video':{'optional':[{'sourceId':exArray[1]
 						}] },'audio':false },function(stream){
 						_this.onCamaraOk(stream);
-					},/*no*/this.errorFunc);
+					},_this.onCamaraErr);
 				});
 			}
+		}
+
+		__proto.onCamaraErr=function(error){
+			alert(error.name);
 		}
 
 		__proto.onCamaraOk=function(stream){
@@ -15861,6 +15865,5 @@ var Laya=window.Laya=(function(window,document){
 
 
 /*
-1 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (53):warning:errorFunc This variable is not defined.
-2 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (60):warning:_this.beginWork This variable is not defined.
+1 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (63):warning:_this.beginWork This variable is not defined.
 */

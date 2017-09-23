@@ -721,15 +721,17 @@ var Laya=window.Laya=(function(window,document){
 		__proto.initCamaraNew=function(){
 			var exArray=[];
 			var _this=this;
-			if (/*no*/this.navigator.getUserMedia){
-				/*no*/this.MediaStreamTrack.getSources(function(sourceInfos){
+			var navigator=Browser.window.navigator;
+			var MediaStreamTrack=Browser.window.MediaStreamTrack;
+			if (navigator.getUserMedia){
+				MediaStreamTrack.getSources(function(sourceInfos){
 					for (var i=0;i !=sourceInfos.length;++i){
 						var sourceInfo=sourceInfos[i];
 						if (sourceInfo.kind==='video'){
 							exArray.push(sourceInfo.id);
 						}
 					}
-					/*no*/this.navigator.getUserMedia({'video':{'optional':[{'sourceId':exArray[1]
+					navigator.getUserMedia({'video':{'optional':[{'sourceId':exArray[1]
 						}] },'audio':false },function(stream){
 						_this.onCamaraOk(stream);
 					},/*no*/this.errorFunc);
@@ -15859,9 +15861,6 @@ var Laya=window.Laya=(function(window,document){
 
 
 /*
-1 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (40):warning:navigator.getUserMedia This variable is not defined.
-2 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (41):warning:MediaStreamTrack.getSources This variable is not defined.
-3 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (48):warning:navigator.getUserMedia This variable is not defined.
-4 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (51):warning:errorFunc This variable is not defined.
-5 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (58):warning:_this.beginWork This variable is not defined.
+1 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (53):warning:errorFunc This variable is not defined.
+2 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (60):warning:_this.beginWork This variable is not defined.
 */

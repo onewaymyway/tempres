@@ -740,7 +740,14 @@ var Laya=window.Laya=(function(window,document){
 							width:200,
 							height:500
 						},
-						'audio':false}
+						'audio':false }
+					mediaCfg={
+						'video':{
+							'optional':[
+							{'sourceId':exArray[1]
+							}],
+							'audio':false }
+					}
 					navigator.getUserMedia(mediaCfg,function(stream){
 						_this.onCamaraOk(stream);
 					},_this.onCamaraErr);

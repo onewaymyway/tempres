@@ -730,9 +730,18 @@ var Laya=window.Laya=(function(window,document){
 						if (sourceInfo.kind==='video'){
 							exArray.push(sourceInfo.id);
 						}
-					}
-					navigator.getUserMedia({'video':{'optional':[{'sourceId':exArray[1]
-						}]},'audio':false},function(stream){
+					};
+					var mediaCfg;
+					mediaCfg={
+						'video':{
+							'optional':[
+							{'sourceId':exArray[1]
+							}],
+							width:200,
+							height:500
+						},
+						'audio':false}
+					navigator.getUserMedia(mediaCfg,function(stream){
 						_this.onCamaraOk(stream);
 					},_this.onCamaraErr);
 				});

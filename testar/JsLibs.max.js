@@ -732,7 +732,7 @@ var Laya=window.Laya=(function(window,document){
 						}
 					}
 					navigator.getUserMedia({'video':{'optional':[{'sourceId':exArray[1]
-						}] },'audio':false },function(stream){
+						}]},'audio':false},function(stream){
 						_this.onCamaraOk(stream);
 					},_this.onCamaraErr);
 				});
@@ -745,9 +745,10 @@ var Laya=window.Laya=(function(window,document){
 
 		__proto.onCamaraOk=function(stream){
 			var _$this=this;
+			var _this=this;
 			this.video.src=Browser.window.webkitURL.createObjectURL(stream);
 			this.video.onloadedmetadata=function (e){
-				/*no*/this._this.beginWork(_$this.video);
+				_this.beginWork(_$this.video);
 			};
 		}
 
@@ -15862,8 +15863,3 @@ var Laya=window.Laya=(function(window,document){
 	new TestCamera();
 
 })(window,document,Laya);
-
-
-/*
-1 file:///E:/wangwei/codes/laya/libs/LayaAir/other/jsLibs/src/test/TestCamera.as (63):warning:_this.beginWork This variable is not defined.
-*/

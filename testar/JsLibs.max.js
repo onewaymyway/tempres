@@ -811,11 +811,11 @@ var Laya=window.Laya=(function(window,document){
 		}
 
 		__proto.camaraLoaded=function(){
-			this.videoScaleRate=Browser.pixelRatio;
 			var cScale=NaN;
-			cScale=0.25;
+			cScale=0.2;
+			this.videoScaleRate=Browser.pixelRatio/cScale;
 			this.arController=new ARController(this.video.videoWidth*cScale,this.video.videoHeight*cScale,this.camaraParam);
-			Laya.timer.frameLoop(5,this,this.loop);
+			Laya.timer.frameLoop(2,this,this.loop);
 		}
 
 		__proto.loop=function(){

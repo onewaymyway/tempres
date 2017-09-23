@@ -812,7 +812,7 @@ var Laya=window.Laya=(function(window,document){
 
 		__proto.camaraLoaded=function(){
 			var cScale=NaN;
-			cScale=0.2;
+			cScale=0.25;
 			this.videoScaleRate=Browser.pixelRatio/cScale;
 			this.arController=new ARController(this.video.videoWidth*cScale,this.video.videoHeight*cScale,this.camaraParam);
 			Laya.timer.frameLoop(2,this,this.loop);

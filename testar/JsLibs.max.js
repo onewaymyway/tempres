@@ -708,7 +708,7 @@ var Laya=window.Laya=(function(window,document){
 			this.markSp.pos(0,0);
 			Laya.stage.addChild(this.markSp);
 			this.video=Browser.getElementById("video");
-			this.initCamaraNew();
+			this.initCamaraVideo();
 		}
 
 		__class(TestCamera,'TestCamera');

@@ -30045,6 +30045,85 @@ var Laya=window.Laya=(function(window,document){
 	*...
 	*@author ww
 	*/
+	//class laya.ar.Smooth
+	var Smooth=(function(){
+		function Smooth(){
+			this._mtList=[];
+			this.smoothRate=0;
+			this._mt=new Matrix4x4();
+		}
+
+		__class(Smooth,'laya.ar.Smooth');
+		var __proto=Smooth.prototype;
+		__proto.updateMt=function(mt){
+			var i=0,len=0;
+			var preValues;
+			var newValues;
+			newValues=mt.elements;
+			preValues=this._mt.elements;
+			len=newValues.length;
+			for (i=0;i < len;i++){
+				preValues[i]=preValues[i] *this.smoothRate+newValues[i] *(1-this.smoothRate);
+			}
+		}
+
+		__proto.resetMt=function(mt){
+			this._mt.elements.set(mt);
+		}
+
+		__getset(0,__proto,'mat',function(){
+			return this._mt;
+		});
+
+		return Smooth;
+	})()
+
+
+	/**
+	*...
+	*@author ww
+	*/
+	//class laya.ar.Trace3D
+	var Trace3D=(function(){
+		function Trace3D(){}
+		__class(Trace3D,'laya.ar.Trace3D');
+		Trace3D.differTransform3d=function(transA,transB){
+			var rst;
+			rst=[];
+			rst.push("position:",Vector3.distance(transA.position,transB.position));
+			rst.push("rotation:",Trace3D.differQuater(transA.rotation,transB.rotation).join(" "));
+			console.log(rst.join("\n"));
+		}
+
+		Trace3D.differVector3D=function(vA,vB){
+			return Trace3D.differKeys(vA,vB,["x","y","z"]);
+		}
+
+		Trace3D.differQuater=function(qA,qB){
+			return Trace3D.differKeys(qA,qB,["x","y","z","w"]);
+		}
+
+		Trace3D.differKeys=function(oA,oB,keys){
+			var i=0,len=0;
+			len=keys.length;
+			var rst;
+			rst=[];
+			for (i=0;i < len;i++){
+				var key;
+				key=keys[i];
+				rst.push(key+":"+(oA[key]-oB[key]));
+			}
+			return rst;
+		}
+
+		return Trace3D;
+	})()
+
+
+	/**
+	*...
+	*@author ww
+	*/
 	//class LayaArTool
 	var LayaArTool=(function(){
 		function LayaArTool(){}
@@ -30063,6 +30142,7 @@ var Laya=window.Laya=(function(window,document){
 
 		LayaArTool.initVideoBySrc=function(video,src,handler){
 			video.src=src;
+			video.loop="loop";
 			video.onloadedmetadata=function (e){
 				handler.runWith(video);
 			};
@@ -30104,7 +30184,6 @@ var Laya=window.Laya=(function(window,document){
 		}
 
 		LayaArTool.onCamaraOk=function(video,stream,handler){
-			DebugTxt.dTrace("onCamaraOk");
 			video.src=Browser.window.webkitURL.createObjectURL(stream);
 			video.onloadedmetadata=function (e){
 				DebugTxt.dTrace("onloadedmetadata");
@@ -36127,6 +36206,21 @@ var Laya=window.Laya=(function(window,document){
 
 
 	/**
+	*<code>UIEvent</code> 类用来定义UI组件类的事件类型。
+	*/
+	//class laya.ui.UIEvent extends laya.events.Event
+	var UIEvent=(function(_super){
+		function UIEvent(){UIEvent.__super.call(this);;
+		};
+
+		__class(UIEvent,'laya.ui.UIEvent',_super);
+		UIEvent.SHOW_TIP="showtip";
+		UIEvent.HIDE_TIP="hidetip";
+		return UIEvent;
+	})(Event)
+
+
+	/**
 	*@private
 	*/
 	//class laya.d3.core.render.SubMeshRenderElement extends laya.d3.core.render.RenderElement
@@ -36141,21 +36235,6 @@ var Laya=window.Laya=(function(window,document){
 		__class(SubMeshRenderElement,'laya.d3.core.render.SubMeshRenderElement',_super);
 		return SubMeshRenderElement;
 	})(RenderElement)
-
-
-	/**
-	*<code>UIEvent</code> 类用来定义UI组件类的事件类型。
-	*/
-	//class laya.ui.UIEvent extends laya.events.Event
-	var UIEvent=(function(_super){
-		function UIEvent(){UIEvent.__super.call(this);;
-		};
-
-		__class(UIEvent,'laya.ui.UIEvent',_super);
-		UIEvent.SHOW_TIP="showtip";
-		UIEvent.HIDE_TIP="hidetip";
-		return UIEvent;
-	})(Event)
 
 
 	//class laya.webgl.display.GraphicsGL extends laya.display.Graphics
@@ -63393,142 +63472,6 @@ var Laya=window.Laya=(function(window,document){
 	})(Sprite)
 
 
-	/**
-	*...
-	*@author ww
-	*/
-	//class test.TestAr3D
-	var TestAr3D=(function(){
-		function TestAr3D(){
-			this.camera=null;
-			this.layaMonkey=null;
-			this.mRoot=null;
-			this.markSp=null;
-			this.camaraParam=null;
-			this.video=null;
-			this.arController=null;
-			this.videoScaleRate=NaN;
-			this.markSp=null;
-			this.mkVisible=false;
-			this.mat=new Float64Array(12);
-			this.mMatrix=new Float64Array(16);
-			this.mt44=new Matrix4x4();
-			Laya.alertGlobalError=true;
-			Laya3D.init(600,400,true,true);
-			Laya.stage.bgColor=null;
-			var scene=Laya.stage.addChild(new Scene());
-			this.camera=scene.addChild(new Camera(0,1,100));
-			this.camera.clearColor=new Vector4(0,0,0,0);
-			var directionLight=scene.addChild(new DirectionLight());
-			directionLight.ambientColor=new Vector3(0.6,0.6,0.6);
-			directionLight.specularColor=new Vector3(0.6,0.6,0.6);
-			directionLight.diffuseColor=new Vector3(0.6,0.6,0.6);
-			directionLight.direction=new Vector3(1,-1,-1);
-			this.layaMonkey=Sprite3D.load("d3res/LayaMonkey/LayaMonkey.lh");
-			this.mRoot=new Sprite3D();
-			this.mRoot.addChild(this.layaMonkey);
-			scene.addChild(this.mRoot);
-			this.initAr();
-		}
-
-		__class(TestAr3D,'test.TestAr3D');
-		var __proto=TestAr3D.prototype;
-		__proto.initAr=function(){
-			this.markSp=new Sprite();
-			this.markSp.pos(0,0);
-			Laya.stage.addChild(this.markSp);
-			this.video=LayaArTool.createVideo();
-			this.video.style["z-index"]=-1;
-			var completeHandler;
-			completeHandler=new Handler(this,this.beginWork,[this.video]);
-			var navigator=Browser.window.navigator;
-			var MediaStreamTrack=Browser.window.MediaStreamTrack;
-			if (Browser.onPC){
-				LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
-				}else{
-				if (Browser.onWeiXin){
-					LayaArTool.initCamaraNew(this.video,completeHandler);
-					}else{
-					LayaArTool.initCamaraVideo(this.video,completeHandler);
-				}
-			}
-		}
-
-		__proto.beginWork=function(video){
-			this.video=video;
-			video.play();
-			this.camaraParam=new ARCameraParam();
-			this.camaraParam.onload=Utils.bind(this.camaraLoaded,this);
-			this.camaraParam.load("Data/camera_para.dat");
-		}
-
-		__proto.camaraLoaded=function(){
-			var cScale=NaN;
-			cScale=0.25;
-			cScale=0.5;
-			this.videoScaleRate=Browser.pixelRatio / cScale;
-			console.log("size:",this.video.videoWidth,this.video.videoHeight);
-			Laya.stage.size(this.video.videoWidth*Browser.pixelRatio,this.video.videoHeight*Browser.pixelRatio);
-			this.arController=new ARController(this.video.videoWidth *cScale,this.video.videoHeight *cScale,this.camaraParam);
-			var camera_mat=this.arController.getCameraMatrix();
-			var mat=new Matrix4x4();
-			var i=0,len=0;
-			len=camera_mat.length;
-			for (i=0;i < len;i++){
-				mat.elements[i]=camera_mat[i];
-			};
-			var ts;
-			ts=new Transform3D();
-			ts.localMatrix=mat;
-			console.log("cam:",ts);
-			this.camera.projectionMatrix=mat;
-			Laya.timer.frameLoop(2,this,this.loop);
-		}
-
-		__proto.loop=function(){
-			this.arController.detectMarker(this.video);
-			var markerNum=this.arController.getMarkerNum();
-			if (markerNum > 0){
-				if (this.mkVisible){
-					this.arController.getTransMatSquareCont(0,1,this.mat,this.mat);
-				}
-				else {
-					this.arController.getTransMatSquare(0 ,1 ,this.mat);
-				}
-				this.mkVisible=true;
-				this.arController.transMatToGLMat(this.mat,this.mt44.elements);
-				this.layaMonkey.transform.localMatrix=this.mt44;
-				this.layaMonkey.transform.rotate(new Vector3(90,0,0),true,false);
-				this.layaMonkey.transform.localScale=new Vector3(5,5,5);
-				var mark;
-				mark=this.arController.getMarker(0);
-				this.updateMark(mark);
-			}
-			else {
-				this.mkVisible=false;
-			}
-		}
-
-		//arController.debugDraw();
-		__proto.updateMark=function(markO){
-			var g;
-			g=this.markSp.graphics;
-			g.clear();
-			var pos=markO.pos;
-			var vertex=markO.vertex;
-			var i=0,len=0;
-			len=vertex.length;
-			for (i=0;i < len;i++){
-				var tPos;
-				tPos=vertex[i];
-				g.drawCircle(tPos[0] *this.videoScaleRate,tPos[1] *this.videoScaleRate,4,"#ff0000");
-			}
-		}
-
-		return TestAr3D;
-	})()
-
-
 	//class test.Sprite3DLoad
 	var Sprite3DLoad=(function(){
 		function Sprite3DLoad(){
@@ -63559,7 +63502,161 @@ var Laya=window.Laya=(function(window,document){
 	})()
 
 
-	Laya.__init([EventDispatcher,LoaderManager,DrawText,Browser,Render,Timer,LocalStorage,ShaderCompile3D,WebGLContext2D,ShaderCompile,AtlasGrid]);
+	/**
+	*...
+	*@author ww
+	*/
+	//class test.TestAr3D
+	var TestAr3D=(function(){
+		function TestAr3D(){
+			this.camera=null;
+			this.layaMonkey=null;
+			this.mRoot=null;
+			this.isBox=false;
+			this.markSp=null;
+			this.camaraParam=null;
+			this.video=null;
+			this.arController=null;
+			this.videoScaleRate=NaN;
+			this.markSp=null;
+			this.mkVisible=false;
+			this.mat=new Float64Array(12);
+			this.mMatrix=new Float64Array(16);
+			this.mt44=new Matrix4x4();
+			this.smooth=new Smooth();
+			this.ts=new Transform3D();
+			this.pTs=new Transform3D();
+			Laya.alertGlobalError=true;
+			Laya3D.init(600,400,true,true);
+			Laya.stage.bgColor=null;
+			this.isBox=true;
+			this.isBox=false;
+			var scene=Laya.stage.addChild(new Scene());
+			this.camera=scene.addChild(new Camera(0,1,100));
+			this.camera.clearColor=new Vector4(0,0,0,0);
+			var directionLight=scene.addChild(new DirectionLight());
+			directionLight.ambientColor=new Vector3(0.6,0.6,0.6);
+			directionLight.specularColor=new Vector3(0.6,0.6,0.6);
+			directionLight.diffuseColor=new Vector3(0.6,0.6,0.6);
+			directionLight.direction=new Vector3(1,-1,-1);
+			if (!this.isBox){
+				this.layaMonkey=Sprite3D.load("d3res/LayaMonkey/LayaMonkey.lh");
+			}
+			else {
+				this.layaMonkey=new Sprite3D();
+				var mesh;
+				mesh=new MeshSprite3D(new BoxMesh(1,1,1));
+				this.layaMonkey.addChild(mesh);
+				mesh.meshRender.material=Laya.StandardMaterial.load("d3res/LayaMonkey/Assets/LayaMonkey/Materials/T_Diffuse.lmat");
+			}
+			this.mRoot=new Sprite3D();
+			this.mRoot.addChild(this.layaMonkey);
+			scene.addChild(this.mRoot);
+			this.initAr();
+		}
+
+		__class(TestAr3D,'test.TestAr3D');
+		var __proto=TestAr3D.prototype;
+		__proto.initAr=function(){
+			this.markSp=new Sprite();
+			this.markSp.pos(0,0);
+			Laya.stage.addChild(this.markSp);
+			this.video=LayaArTool.createVideo();
+			this.video.style["z-index"]=-1;
+			var completeHandler;
+			completeHandler=new Handler(this,this.beginWork,[this.video]);
+			if (Browser.onPC){
+				LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
+			}
+			else {
+				if (Browser.onWeiXin){
+					LayaArTool.initCamaraNew(this.video,completeHandler);
+				}
+				else {
+					LayaArTool.initCamaraVideo(this.video,completeHandler);
+				}
+			}
+		}
+
+		__proto.beginWork=function(video){
+			this.video=video;
+			video.play();
+			this.camaraParam=new ARCameraParam();
+			this.camaraParam.onload=Utils.bind(this.camaraLoaded,this);
+			this.camaraParam.load("Data/camera_para.dat");
+		}
+
+		__proto.camaraLoaded=function(){
+			var cScale=NaN;
+			cScale=0.25;
+			cScale=0.5;
+			this.videoScaleRate=Browser.pixelRatio / cScale;
+			console.log("size:",this.video.videoWidth,this.video.videoHeight);
+			Laya.stage.size(this.video.videoWidth *Browser.pixelRatio,this.video.videoHeight *Browser.pixelRatio);
+			this.arController=new ARController(this.video.videoWidth *cScale,this.video.videoHeight *cScale,this.camaraParam);
+			var mode;
+			mode=artoolkit.AR_MATRIX_CODE_DETECTION;
+			this.arController.setPatternDetectionMode(mode);
+			var camera_mat=this.arController.getCameraMatrix();
+			var mat=new Matrix4x4();
+			mat.elements.set(camera_mat);
+			this.camera.projectionMatrix=mat;
+			Laya.timer.frameLoop(2,this,this.loop);
+		}
+
+		__proto.loop=function(){
+			this.arController.detectMarker(this.video);
+			var markerNum=this.arController.getMarkerNum();
+			if (markerNum > 0){
+				if (this.mkVisible){
+					this.arController.getTransMatSquareCont(0,1,this.mat,this.mat);
+					this.arController.transMatToGLMat(this.mat,this.mt44.elements);
+					this.smooth.updateMt(this.mt44);
+				}
+				else {
+					this.arController.getTransMatSquare(0 ,1 ,this.mat);
+					this.arController.transMatToGLMat(this.mat,this.mt44.elements);
+					this.smooth.resetMt(this.mt44);
+				}
+				this.mkVisible=true;
+				this.ts.localMatrix=this.mt44;
+				Trace3D.differTransform3d(this.ts,this.pTs);
+				this.pTs.localMatrix=this.mt44;
+				this.layaMonkey.transform.localMatrix=this.smooth.mat;
+				if (!this.isBox){
+					this.layaMonkey.transform.rotate(new Vector3(90,0,0),true,false);
+					this.layaMonkey.transform.localScale=new Vector3(5,5,5);
+				};
+				var mark;
+				mark=this.arController.getMarker(0);
+				this.updateMark(mark);
+			}
+			else {
+				this.mkVisible=false;
+			}
+		}
+
+		//layaMonkey.active=false;
+		__proto.updateMark=function(markO){
+			var g;
+			g=this.markSp.graphics;
+			g.clear();
+			var pos=markO.pos;
+			var vertex=markO.vertex;
+			var i=0,len=0;
+			len=vertex.length;
+			for (i=0;i < len;i++){
+				var tPos;
+				tPos=vertex[i];
+				g.drawCircle(tPos[0] *this.videoScaleRate,tPos[1] *this.videoScaleRate,4,"#ff0000");
+			}
+		}
+
+		return TestAr3D;
+	})()
+
+
+	Laya.__init([EventDispatcher,LoaderManager,DrawText,Render,Timer,LocalStorage,Browser,ShaderCompile3D,WebGLContext2D,ShaderCompile,AtlasGrid]);
 	new test.TestAr3D();
 
 })(window,document,Laya);

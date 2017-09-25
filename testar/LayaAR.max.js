@@ -30049,8 +30049,70 @@ var Laya=window.Laya=(function(window,document){
 	var LayaArTool=(function(){
 		function LayaArTool(){}
 		__class(LayaArTool,'LayaArTool');
-		var __proto=LayaArTool.prototype;
-		__proto.initCamaraVideo=function(video,handler){
+		LayaArTool.createVideo=function(){
+			var video;
+			video=Browser.createElement("video");
+			Browser.document.body.appendChild(video);
+			var style;
+			style=video.style;
+			style.position="absolute";
+			style.left="0px";
+			style.top="0px";
+			return video;
+		}
+
+		LayaArTool.initVideoBySrc=function(video,src,handler){
+			video.src=src;
+			video.onloadedmetadata=function (e){
+				handler.runWith(video);
+			};
+		}
+
+		LayaArTool.initCamaraNew=function(video,handler){
+			var exArray=[];
+			var navigator=Browser.window.navigator;
+			var MediaStreamTrack=Browser.window.MediaStreamTrack;
+			DebugTxt.dTrace("navigator.getUserMedia"+navigator.getUserMedia);
+			if (navigator.getUserMedia){
+				DebugTxt.dTrace("MediaStreamTrack.getSources");
+				MediaStreamTrack.getSources(function(sourceInfos){
+					for (var i=0;i !=sourceInfos.length;++i){
+						var sourceInfo=sourceInfos[i];
+						if (sourceInfo.kind==='video'){
+							exArray.push(sourceInfo.id);
+						}
+					};
+					var mediaCfg;
+					mediaCfg={
+						'video':{
+							'optional':[
+							{'sourceId':exArray[1]
+							}],
+							'audio':false }
+					}
+					DebugTxt.dTrace("navigator.getUserMedia");
+					navigator.getUserMedia(mediaCfg,function(stream){
+						DebugTxt.dTrace("onCamaraOk");
+						LayaArTool.onCamaraOk(video,stream,handler);
+					},LayaArTool.onCamaraErr);
+				});
+			}
+		}
+
+		LayaArTool.onCamaraErr=function(error){
+			alert(error.name);
+		}
+
+		LayaArTool.onCamaraOk=function(video,stream,handler){
+			DebugTxt.dTrace("onCamaraOk");
+			video.src=Browser.window.webkitURL.createObjectURL(stream);
+			video.onloadedmetadata=function (e){
+				DebugTxt.dTrace("onloadedmetadata");
+				handler.runWith(video);
+			};
+		}
+
+		LayaArTool.initCamaraVideo=function(video,handler){
 			var navigator=Browser.window.navigator;
 			var videoObj={"video":true};
 			var errBack=function (error){
@@ -30081,65 +30143,6 @@ var Laya=window.Laya=(function(window,document){
 					};
 				},LayaArTool.onCamaraErr);
 			}
-		}
-
-		LayaArTool.createVideo=function(){
-			var video;
-			video=Browser.createElement("video");
-			Browser.document.body.appendChild(video);
-			var style;
-			style=video.style;
-			style.position="absolute";
-			style.left="0px";
-			style.top="0px";
-			return video;
-		}
-
-		LayaArTool.initVideoBySrc=function(video,src,handler){
-			video.src=src;
-			video.onloadedmetadata=function (e){
-				handler.runWith(video);
-			};
-		}
-
-		LayaArTool.initCamaraNew=function(video,handler){
-			var exArray=[];
-			var _this=this;
-			var navigator=Browser.window.navigator;
-			var MediaStreamTrack=Browser.window.MediaStreamTrack;
-			if (navigator.getUserMedia){
-				MediaStreamTrack.getSources(function(sourceInfos){
-					for (var i=0;i !=sourceInfos.length;++i){
-						var sourceInfo=sourceInfos[i];
-						if (sourceInfo.kind==='video'){
-							exArray.push(sourceInfo.id);
-						}
-					};
-					var mediaCfg;
-					mediaCfg={
-						'video':{
-							'optional':[
-							{'sourceId':exArray[1]
-							}],
-							'audio':false }
-					}
-					navigator.getUserMedia(mediaCfg,function(stream){
-						LayaArTool.onCamaraOk(video,stream,handler);
-					},LayaArTool.onCamaraErr);
-				});
-			}
-		}
-
-		LayaArTool.onCamaraErr=function(error){
-			alert(error.name);
-		}
-
-		LayaArTool.onCamaraOk=function(video,stream,handler){
-			var _this=this;
-			video.src=Browser.window.webkitURL.createObjectURL(stream);
-			video.onloadedmetadata=function (e){
-				handler.runWith(video);
-			};
 		}
 
 		return LayaArTool;
@@ -61693,6 +61696,130 @@ var Laya=window.Laya=(function(window,document){
 
 
 	/**
+	*<code>DirectionLight</code> 类用于创建平行光。
+	*/
+	//class laya.d3.core.light.DirectionLight extends laya.d3.core.light.LightSprite
+	var DirectionLight=(function(_super){
+		function DirectionLight(){
+			this._updateDirection=false;
+			this._direction=null;
+			DirectionLight.__super.call(this);
+			this._updateDirection=false;
+			this.direction=new Vector3(0.0,-0.5,-1.0);
+			this.transform.on("worldmatrixneedchanged",this,this._onWorldMatrixChange);
+		}
+
+		__class(DirectionLight,'laya.d3.core.light.DirectionLight',_super);
+		var __proto=DirectionLight.prototype;
+		/**
+		*@private
+		*/
+		__proto._initShadow=function(){
+			if (this._shadow){
+				this._parallelSplitShadowMap=new ParallelSplitShadowMap();
+				this.scene.parallelSplitShadowMaps.push(this._parallelSplitShadowMap);
+				this._parallelSplitShadowMap.setInfo(this.scene,this._shadowFarPlane,this.direction,this._shadowMapSize,this._shadowMapCount,this._shadowMapPCFType);
+				}else {
+				var parallelSplitShadowMaps=this.scene.parallelSplitShadowMaps;
+				parallelSplitShadowMaps.splice(parallelSplitShadowMaps.indexOf(this._parallelSplitShadowMap),1);
+				this._parallelSplitShadowMap.disposeAllRenderTarget();
+				this._parallelSplitShadowMap=null;
+				this.scene.removeShaderDefine(ParallelSplitShadowMap.SHADERDEFINE_SHADOW_PSSM1);
+				this.scene.removeShaderDefine(ParallelSplitShadowMap.SHADERDEFINE_SHADOW_PSSM2);
+				this.scene.removeShaderDefine(ParallelSplitShadowMap.SHADERDEFINE_SHADOW_PSSM3);
+			}
+		}
+
+		/**
+		*@private
+		*/
+		__proto._onWorldMatrixChange=function(){
+			this._updateDirection=true;
+		}
+
+		/**
+		*@inheritDoc
+		*/
+		__proto._addSelfRenderObjects=function(){
+			_super.prototype._addSelfRenderObjects.call(this);
+			this._shadow && (this._initShadow());
+		}
+
+		/**
+		*@inheritDoc
+		*/
+		__proto._clearSelfRenderObjects=function(){
+			var scene=this.scene;
+			var shaderValue=scene._shaderValues;
+			shaderValue.setValue(4,null);
+			shaderValue.setValue(3,null);
+			scene.removeShaderDefine(ShaderCompile3D.SHADERDEFINE_DIRECTIONLIGHT);
+		}
+
+		/**
+		*更新平行光相关渲染状态参数。
+		*@param state 渲染状态参数。
+		*/
+		__proto.updateToWorldState=function(state){
+			var scene=state.scene;
+			if (scene.enableLight && this._activeInHierarchy){
+				var shaderValue=scene._shaderValues;
+				scene.addShaderDefine(ShaderCompile3D.SHADERDEFINE_DIRECTIONLIGHT);
+				shaderValue.setValue(4,this.color.elements);
+				shaderValue.setValue(3,this.direction.elements);
+				return true;
+				}else {
+				scene.removeShaderDefine(ShaderCompile3D.SHADERDEFINE_DIRECTIONLIGHT);
+				return false;
+			}
+		}
+
+		/**
+		*设置平行光的方向。
+		*@param value 平行光的方向。
+		*/
+		/**
+		*获取平行光的方向。
+		*@return 平行光的方向。
+		*/
+		__getset(0,__proto,'direction',function(){
+			if (this._updateDirection){
+				this.transform.worldMatrix.getForward(this._direction);
+				Vector3.normalize(this._direction,this._direction);
+				this._updateDirection=false;
+			}
+			return this._direction;
+			},function(value){
+			var worldMatrix=this.transform.worldMatrix;
+			worldMatrix.setForward(value);
+			this.transform.worldMatrix=worldMatrix;
+			Vector3.normalize(value,value);
+			this._direction=value;
+			(this.shadow && this._parallelSplitShadowMap)&& (this._parallelSplitShadowMap._setGlobalParallelLightDir(this._direction));
+		});
+
+		/**
+		*@inheritDoc
+		*/
+		__getset(0,__proto,'lightType',function(){
+			return 1;
+		});
+
+		/**
+		*@inheritDoc
+		*/
+		__getset(0,__proto,'shadow',_super.prototype._$get_shadow,function(value){
+			if (this._shadow!==value){
+				this._shadow=value;
+				(this.scene)&& (this._initShadow());
+			}
+		});
+
+		return DirectionLight;
+	})(LightSprite)
+
+
+	/**
 	*<code>MeshSprite3D</code> 类用于创建网格。
 	*/
 	//class laya.d3.core.MeshSprite3D extends laya.d3.core.RenderableSprite3D
@@ -63286,17 +63413,18 @@ var Laya=window.Laya=(function(window,document){
 			this.mat=new Float64Array(12);
 			this.mMatrix=new Float64Array(16);
 			this.mt44=new Matrix4x4();
-			Laya3D.init(800,600,true,true);
+			Laya.alertGlobalError=true;
+			Laya3D.init(600,400,true,true);
 			Laya.stage.bgColor=null;
-			DebugTxt.init();
 			var scene=Laya.stage.addChild(new Scene());
 			this.camera=scene.addChild(new Camera(0,1,100));
 			this.camera.clearColor=new Vector4(0,0,0,0);
-			this.layaMonkey=new Sprite3D();
-			var mesh;
-			mesh=new MeshSprite3D(new BoxMesh(1,1,1));
-			this.layaMonkey.addChild(mesh);
-			mesh.meshRender.material=Laya.StandardMaterial.load("d3res/LayaMonkey/Assets/LayaMonkey/Materials/T_Diffuse.lmat");
+			var directionLight=scene.addChild(new DirectionLight());
+			directionLight.ambientColor=new Vector3(0.6,0.6,0.6);
+			directionLight.specularColor=new Vector3(0.6,0.6,0.6);
+			directionLight.diffuseColor=new Vector3(0.6,0.6,0.6);
+			directionLight.direction=new Vector3(1,-1,-1);
+			this.layaMonkey=Sprite3D.load("d3res/LayaMonkey/LayaMonkey.lh");
 			this.mRoot=new Sprite3D();
 			this.mRoot.addChild(this.layaMonkey);
 			scene.addChild(this.mRoot);
@@ -63314,7 +63442,9 @@ var Laya=window.Laya=(function(window,document){
 			this.video.style["z-index"]=-1;
 			var completeHandler;
 			completeHandler=new Handler(this,this.beginWork,[this.video]);
-			LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
+			var navigator=Browser.window.navigator;
+			var MediaStreamTrack=Browser.window.MediaStreamTrack;
+			LayaArTool.initCamaraNew(this.video,completeHandler);
 		}
 
 		__proto.beginWork=function(video){
@@ -63330,12 +63460,10 @@ var Laya=window.Laya=(function(window,document){
 			cScale=0.25;
 			cScale=0.5;
 			this.videoScaleRate=Browser.pixelRatio / cScale;
+			console.log("size:",this.video.videoWidth,this.video.videoHeight);
+			Laya.stage.size(this.video.videoWidth*Browser.pixelRatio,this.video.videoHeight*Browser.pixelRatio);
 			this.arController=new ARController(this.video.videoWidth *cScale,this.video.videoHeight *cScale,this.camaraParam);
 			var camera_mat=this.arController.getCameraMatrix();
-			this.video.style["transform"]="scale(2,2)";
-			this.video.style.left=(88+this.video.videoWidth *cScale)+"px";
-			this.video.style.top=(60+this.video.videoHeight *cScale)+"px";
-			console.log("camMat:",camera_mat);
 			var mat=new Matrix4x4();
 			var i=0,len=0;
 			len=camera_mat.length;
@@ -63363,6 +63491,7 @@ var Laya=window.Laya=(function(window,document){
 				this.mkVisible=true;
 				this.arController.transMatToGLMat(this.mat,this.mt44.elements);
 				this.layaMonkey.transform.localMatrix=this.mt44;
+				this.layaMonkey.transform.localScale=new Vector3(5,5,5);
 				var mark;
 				mark=this.arController.getMarker(0);
 				this.updateMark(mark);

@@ -63428,7 +63428,6 @@ var Laya=window.Laya=(function(window,document){
 			this.mRoot=new Sprite3D();
 			this.mRoot.addChild(this.layaMonkey);
 			scene.addChild(this.mRoot);
-			debugger;
 			this.initAr();
 		}
 
@@ -63444,7 +63443,15 @@ var Laya=window.Laya=(function(window,document){
 			completeHandler=new Handler(this,this.beginWork,[this.video]);
 			var navigator=Browser.window.navigator;
 			var MediaStreamTrack=Browser.window.MediaStreamTrack;
-			LayaArTool.initCamaraNew(this.video,completeHandler);
+			if (Browser.onPC){
+				LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
+				}else{
+				if (Browser.onWeiXin){
+					LayaArTool.initCamaraNew(this.video,completeHandler);
+					}else{
+					LayaArTool.initCamaraVideo(this.video,completeHandler);
+				}
+			}
 		}
 
 		__proto.beginWork=function(video){
@@ -63491,6 +63498,7 @@ var Laya=window.Laya=(function(window,document){
 				this.mkVisible=true;
 				this.arController.transMatToGLMat(this.mat,this.mt44.elements);
 				this.layaMonkey.transform.localMatrix=this.mt44;
+				this.layaMonkey.transform.rotate(new Vector3(90,0,0),true,false);
 				this.layaMonkey.transform.localScale=new Vector3(5,5,5);
 				var mark;
 				mark=this.arController.getMarker(0);

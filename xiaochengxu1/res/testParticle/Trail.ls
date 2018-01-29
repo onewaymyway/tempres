@@ -402,7 +402,7 @@
 						"sortingFudge":0,
 						"material":{
 							"type":"Laya.ShurikenParticleMaterial",
-							"path":"Assets/Export To Three.lmat"
+							"path":"Assets/ExportToThree.lmat"
 						}
 					},
 					"components":{},
@@ -888,7 +888,7 @@
 								"sortingFudge":0,
 								"material":{
 									"type":"Laya.ShurikenParticleMaterial",
-									"path":"Assets/Export To Three.lmat"
+									"path":"Assets/ExportToThree.lmat"
 								}
 							},
 							"components":{},

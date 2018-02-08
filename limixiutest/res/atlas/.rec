@@ -1,0 +1,156 @@
+D .
+D comp
+P D12221A9 bg.png
+P 9401CC40 blank.png
+P B03390E5 btn_close.png
+P 1F3929EA button.png
+P 6CC6DF97 checkbox.png
+P FB94CCF2 clip_num.png
+P F7B6B7D7 clip_selectBox.png
+P 755271AE clip_tree_arrow.png
+P 859FD34C clip_tree_folder.png
+P A0E3B8F9 combobox.png
+P 9EDA959E hscroll$bar.png
+P 1AB768D4 hscroll$down.png
+P 685261D3 hscroll$up.png
+P 274B8076 hscroll.png
+P E466EB1C hslider$bar.png
+P C4BECA54 hslider.png
+P 5EDC128C html.png
+P ACFFCCCF image.png
+P 5EDC128C label.png
+P 5EDC128C linkbutton.png
+P 9E4DD730 progress$bar.png
+P 3FD78E12 progress.png
+P BF898D6A radio.png
+P BF898D6A radiogroup.png
+P 8CFD9D35 tab.png
+P BDA71F88 textarea.png
+P BDA71F88 textinput.png
+P 52107B89 vscroll$bar.png
+P E26B933E vscroll$down.png
+P B9680947 vscroll$up.png
+P 7E990267 vscroll.png
+P E466EB1C vslider$bar.png
+P 2BFF7046 vslider.png
+D manPool
+D monster
+P E297B02F blank_gxuetiao.png
+P C54D1780 guai1_00.png
+P 9C627E57 guai1_01.png
+P 6A6C21D7 guai1_02.png
+P 5D9DF7BE guai1_03.png
+P 8C8A7142 guai1_04.png
+P 4FB3199B guai1_06.png
+P 7FAD12C5 guai1_07.png
+P 811F5155 guai1_5.png
+P A6C4CAF6 guai2_01.png
+P A83C05F5 guai2_02.png
+P 8F7917B7 guai2_03.png
+P 4B9D94B2 Guai_kulou_01.png
+P 46047A62 progress_0$bar.png
+P DE26C972 progress_0.png
+D res
+D manPool/heroAni
+D manPool/heroAni/hero1
+D manPool/heroAni/hero1/hero_1_attack
+P 04F8515B attack0001.png
+P A5B6AFBC attack0002.png
+P E5D2602F attack0003.png
+P 06987938 attack0004.png
+P C6BA52DF attack0005.png
+P 783C4A3C attack0006.png
+P C897066F attack0007.png
+P 03D30CD1 attack0008.png
+P FE26E343 attack0009.png
+P 4BA941FB attack0010.png
+P 6F350720 attack0011.png
+P BFBA50CB attack0012.png
+P E864CB5C attack0013.png
+P 6AB35291 attack0014.png
+P B254F7B5 attack0015.png
+P 5E9CE851 attack0016.png
+P 1532D71C attack0017.png
+P 4CCCFCC2 attack0018.png
+D manPool/heroAni/hero1/hero_1_death
+P 64C43C9E death0001.png
+P 7C497A2A death0002.png
+P 4D32FD54 death0003.png
+P 8909B70A death0004.png
+P 32EF91E5 death0005.png
+P 739E5B53 death0006.png
+P FD287DB9 death0007.png
+P 1D0AC4DA death0008.png
+D manPool/heroAni/hero1/hero_1_hurt
+P 8BC172BB hurt0001.png
+P BF942868 hurt0002.png
+P 72794592 hurt0003.png
+P 6CA40138 hurt0004.png
+P C4C30238 hurt0005.png
+P A0C1AF6F hurt0006.png
+P ADF0568A hurt0007.png
+P 26C2F1F9 hurt0008.png
+D manPool/heroAni/hero1/hero_1_idle
+P A3AA8F22 idle0001.png
+P A17F100F idle0002.png
+P 8DCB4A37 idle0003.png
+P 579D9A9B idle0004.png
+P 9D99A13F idle0005.png
+P 93E89769 idle0006.png
+P 22E9DB4E idle0007.png
+P D16EA64C idle0008.png
+P 51984F5E idle0009.png
+P 7BB5B3B7 idle0010.png
+P 3D42D4F8 idle0011.png
+P A43A1681 idle0012.png
+P 92FF5C53 idle0013.png
+P 60304F24 idle0014.png
+P 878EF868 idle0015.png
+P 60304F24 idle0016.png
+P 280169E3 idle0017.png
+P 2720B456 idle0018.png
+P 81B348EA idle0019.png
+P BD9D7F2A idle0020.png
+P 2E5F1E7C idle0021.png
+P 258970E4 idle0022.png
+P EBE5EFA5 idle0023.png
+P 9533D6C7 idle0024.png
+P 3CE6F00D idle0025.png
+P 0F0D1B75 idle0026.png
+P BEE43F0C idle0027.png
+P 00B4A439 idle0028.png
+P 5317AD30 idle0029.png
+P C6CE8429 idle0030.png
+P 009088B9 idle0031.png
+P BF41B48C idle0032.png
+P F2B111D5 idle0033.png
+P A3AA8F22 idle0034.png
+D manPool/heroAni/hero1/hero_1_leftDown
+P 5FD4F4EF leftDown0001.png
+P E3C83F99 leftDown0002.png
+P 265C1985 leftDown0003.png
+P 4D59725E leftDown0004.png
+P 5B2599A3 leftDown0005.png
+P E93630D4 leftDown0006.png
+P 554EBE89 leftDown0007.png
+P 3F715F7A leftDown0008.png
+P 5F633333 leftDown0009.png
+P 819E4260 leftDown0010.png
+P 3C2ABB8E leftDown0011.png
+P 13811932 leftDown0012.png
+D manPool/heroAni/hero1/hero_1_leftUp
+P 79A55EF8 leftUp0001.png
+P 24442CA9 leftUp0002.png
+P 4594E07B leftUp0003.png
+P 4CD0A6CB leftUp0004.png
+P A85522AD leftUp0005.png
+P 3006D927 leftUp0006.png
+P D3632EC5 leftUp0007.png
+P 8B7787E7 leftUp0008.png
+P 5BB979F2 leftUp0009.png
+P C306696D leftUp0010.png
+P 9D6C82E3 leftUp0011.png
+P 0AA12553 leftUp0012.png
+D manPool/heroAni/hero1/hero_1_stand
+P 282CD30D stand0001.png
+P 4ACA8BF1 stand0002.png

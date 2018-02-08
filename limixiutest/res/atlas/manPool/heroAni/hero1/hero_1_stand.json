@@ -1,0 +1,50 @@
+{
+    "frames": {
+        "stand0001.png": {
+            "frame": {
+                "h": 89,
+                "idx": 0,
+                "w": 75,
+                "x": 0,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 89,
+                "w": 76
+            },
+            "spriteSourceSize": {
+                "h": 89,
+                "w": 75,
+                "x": 0,
+                "y": 0
+            },
+            "trimmed": true
+        },
+        "stand0002.png": {
+            "frame": {
+                "h": 87,
+                "idx": 0,
+                "w": 75,
+                "x": 76,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 89,
+                "w": 76
+            },
+            "spriteSourceSize": {
+                "h": 87,
+                "w": 75,
+                "x": 1,
+                "y": 2
+            },
+            "trimmed": true
+        }
+    },
+    "meta": {
+        "image": "hero_1_stand.png",
+        "prefix": "manPool/heroAni/hero1/hero_1_stand/"
+    }
+}

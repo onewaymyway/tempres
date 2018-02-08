@@ -1,0 +1,176 @@
+{
+    "frames": {
+        "hurt0001.png": {
+            "frame": {
+                "h": 89,
+                "idx": 0,
+                "w": 75,
+                "x": 0,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 89,
+                "w": 75,
+                "x": 23,
+                "y": 1
+            },
+            "trimmed": true
+        },
+        "hurt0002.png": {
+            "frame": {
+                "h": 83,
+                "idx": 0,
+                "w": 69,
+                "x": 0,
+                "y": 90
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 83,
+                "w": 69,
+                "x": 38,
+                "y": 7
+            },
+            "trimmed": true
+        },
+        "hurt0003.png": {
+            "frame": {
+                "h": 89,
+                "idx": 0,
+                "w": 76,
+                "x": 0,
+                "y": 174
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 89,
+                "w": 76,
+                "x": 6,
+                "y": 1
+            },
+            "trimmed": true
+        },
+        "hurt0004.png": {
+            "frame": {
+                "h": 87,
+                "idx": 0,
+                "w": 82,
+                "x": 76,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 87,
+                "w": 82,
+                "x": 0,
+                "y": 3
+            },
+            "trimmed": true
+        },
+        "hurt0005.png": {
+            "frame": {
+                "h": 86,
+                "idx": 0,
+                "w": 74,
+                "x": 159,
+                "y": 0
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 86,
+                "w": 74,
+                "x": 23,
+                "y": 4
+            },
+            "trimmed": true
+        },
+        "hurt0006.png": {
+            "frame": {
+                "h": 84,
+                "idx": 0,
+                "w": 71,
+                "x": 76,
+                "y": 88
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 84,
+                "w": 71,
+                "x": 34,
+                "y": 6
+            },
+            "trimmed": true
+        },
+        "hurt0007.png": {
+            "frame": {
+                "h": 87,
+                "idx": 0,
+                "w": 71,
+                "x": 77,
+                "y": 173
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 87,
+                "w": 71,
+                "x": 27,
+                "y": 3
+            },
+            "trimmed": true
+        },
+        "hurt0008.png": {
+            "frame": {
+                "h": 88,
+                "idx": 0,
+                "w": 74,
+                "x": 159,
+                "y": 87
+            },
+            "rotated": false,
+            "sourceSize": {
+                "h": 90,
+                "w": 107
+            },
+            "spriteSourceSize": {
+                "h": 88,
+                "w": 74,
+                "x": 24,
+                "y": 2
+            },
+            "trimmed": true
+        }
+    },
+    "meta": {
+        "image": "hero_1_hurt.png",
+        "prefix": "manPool/heroAni/hero1/hero_1_hurt/"
+    }
+}

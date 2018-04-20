@@ -72031,8 +72031,6 @@ var Laya=window.Laya=(function(window,document){
 			this.video.style["z-index"]=-1;
 			var completeHandler;
 			completeHandler=new Handler(this,this.beginWork,[this.video]);
-			LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
-			return;
 			if (Browser.onPC){
 				LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
 			}

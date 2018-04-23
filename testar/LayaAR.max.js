@@ -34046,7 +34046,7 @@ var Laya=window.Laya=(function(window,document){
 
 		LayaArTool.initCamaraVideo=function(video,handler){
 			var navigator=Browser.window.navigator;
-			var videoObj={"video":true};
+			var videoObj={"video":true,facingMode:"environment"};
 			var errBack=function (error){
 				alert(error.name);
 			};

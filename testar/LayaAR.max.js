@@ -72032,7 +72032,6 @@ var Laya=window.Laya=(function(window,document){
 			Laya.alertGlobalError=true;
 			Laya3D.init(600,400,true,true);
 			Laya.stage.bgColor=null;
-			DebugTxt.init();
 			this.isBox=true;
 			this.isBox=false;
 			var scene=Laya.stage.addChild(new Scene());

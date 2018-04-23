@@ -34037,7 +34037,7 @@ var Laya=window.Laya=(function(window,document){
 		}
 
 		LayaArTool.onCamaraOk=function(video,stream,handler){
-			video.src=Browser.window.webkitURL.createObjectURL(stream);
+			video.src=Browser.window.URL.createObjectURL(stream);
 			video.onloadedmetadata=function (e){
 				DebugTxt.dTrace("onloadedmetadata");
 				handler.runWith(video);
@@ -34053,7 +34053,7 @@ var Laya=window.Laya=(function(window,document){
 			var _this=this;
 			if (navigator.getUserMedia){
 				navigator.getUserMedia(videoObj,function(stream){
-					video.src=stream;
+					video.src=Browser.window.URL.createObjectURL(stream);
 					video.onloadedmetadata=function (e){
 						handler.runWith(video);
 					};

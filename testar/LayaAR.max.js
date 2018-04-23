@@ -34006,8 +34006,10 @@ var Laya=window.Laya=(function(window,document){
 			var navigator=Browser.window.navigator;
 			var MediaStreamTrack=Browser.window.MediaStreamTrack;
 			DebugTxt.dTrace("navigator.getUserMedia"+navigator.getUserMedia);
+			DebugTxt.dTrace("MediaStreamTrack",Browser.window.MediaStreamTrack);
+			DebugTxt.dTrace("MediaStreamTrack.getSources",Browser.window.MediaStreamTrack.getSources);
 			if (navigator.getUserMedia){
-				DebugTxt.dTrace("MediaStreamTrack.getSources");
+				DebugTxt.dTrace("MediaStreamTrack.getSources",MediaStreamTrack.getSources);
 				MediaStreamTrack.getSources(function(sourceInfos){
 					for (var i=0;i !=sourceInfos.length;++i){
 						var sourceInfo=sourceInfos[i];
@@ -34046,7 +34048,7 @@ var Laya=window.Laya=(function(window,document){
 
 		LayaArTool.initCamaraVideo=function(video,handler){
 			var navigator=Browser.window.navigator;
-			var videoObj={"video":true,facingMode:"environment"};
+			var videoObj={"video":true};
 			var errBack=function (error){
 				alert(error.name);
 			};
@@ -72000,6 +72002,7 @@ var Laya=window.Laya=(function(window,document){
 			Laya.alertGlobalError=true;
 			Laya3D.init(600,400,true,true);
 			Laya.stage.bgColor=null;
+			DebugTxt.init();
 			this.isBox=true;
 			this.isBox=false;
 			var scene=Laya.stage.addChild(new Scene());
@@ -72036,7 +72039,7 @@ var Laya=window.Laya=(function(window,document){
 			}
 			else {
 				if (Browser.onWeiXin){
-					LayaArTool.initCamaraVideo(this.video,completeHandler);
+					LayaArTool.initCamaraNew(this.video,completeHandler);
 				}
 				else {
 					LayaArTool.initCamaraVideo(this.video,completeHandler);

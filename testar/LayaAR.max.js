@@ -72036,7 +72036,7 @@ var Laya=window.Laya=(function(window,document){
 			}
 			else {
 				if (Browser.onWeiXin){
-					LayaArTool.initCamaraNew(this.video,completeHandler);
+					LayaArTool.initCamaraVideo(this.video,completeHandler);
 				}
 				else {
 					LayaArTool.initCamaraVideo(this.video,completeHandler);

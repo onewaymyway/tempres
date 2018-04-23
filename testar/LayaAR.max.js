@@ -34044,6 +34044,10 @@ var Laya=window.Laya=(function(window,document){
 						audioArray.push(deviceInfo.label || 'microphone '+(audioArray.length+1));
 					}
 					else if (deviceInfo.kind==='videoinput'){
+						var key;
+						for (key in deviceInfo){
+							DebugTxt.dTrace(key,deviceInfo[key]);
+						}
 						exArray.push(deviceInfo.label || 'camera '+(exArray.length+1));
 					}
 					else {

@@ -34051,15 +34051,13 @@ var Laya=window.Laya=(function(window,document){
 					}
 				}
 				DebugTxt.dTrace("deviceId:",exArray[1]);
-				var constraints={audio:{deviceId:{exact:audioArray[0]}},video:{deviceId:{exact:exArray[1]}}};
-				navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
-				function gotStream (stream){
-					DebugTxt.dTrace("gotStream:",stream);
+				var mediaCfg;
+				mediaCfg={'video':{deviceId:{exact:exArray[1]}},'audio':false};
+				DebugTxt.dTrace("navigator.getUserMedia");
+				navigator.getUserMedia(mediaCfg,function(stream){
+					DebugTxt.dTrace("onCamaraOk");
 					LayaArTool.onCamaraOk(video,stream,handler);
-				}
-				function handleError (error){
-					alert('Error: '+error+error.message);
-				}
+				},LayaArTool.onCamaraErr);
 			}
 		}
 

@@ -34037,10 +34037,10 @@ var Laya=window.Laya=(function(window,document){
 			var exArray=[];
 			var navigator=Browser.window.navigator;
 			if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices){
+				navigator.mediaDevices.enumerateDevices().then(gotDevices);
+				}else{
 				LayaArTool.initCamaraNew(video,handler);
 				return;
-				}else{
-				navigator.mediaDevices.enumerateDevices().then(gotDevices);
 			};
 			var audioArray=[];
 			function gotDevices (deviceInfos){

@@ -72036,7 +72036,7 @@ var Laya=window.Laya=(function(window,document){
 			}
 			else {
 				if (Browser.onWeiXin){
-					LayaArTool.initCamaraVideo(this.video,completeHandler);
+					LayaArTool.initCamaraNew(this.video,completeHandler);
 				}
 				else {
 					LayaArTool.initCamaraVideo(this.video,completeHandler);
@@ -72047,7 +72047,6 @@ var Laya=window.Laya=(function(window,document){
 		__proto.beginWork=function(video){
 			this.video=video;
 			video.play();
-			return;
 			this.camaraParam=new ARCameraParam();
 			this.camaraParam.onload=Utils.bind(this.camaraLoaded,this);
 			this.camaraParam.load("Data/camera_para.dat");
@@ -72061,6 +72060,7 @@ var Laya=window.Laya=(function(window,document){
 			console.log("size:",this.video.videoWidth,this.video.videoHeight);
 			Laya.stage.size(this.video.videoWidth *Browser.pixelRatio,this.video.videoHeight *Browser.pixelRatio);
 			this.arController=new ARController(this.video.videoWidth *cScale,this.video.videoHeight *cScale,this.camaraParam);
+			return;
 			var mode;
 			mode=artoolkit.AR_MATRIX_CODE_DETECTION;
 			this.arController.setPatternDetectionMode(mode);

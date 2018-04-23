@@ -34007,9 +34007,10 @@ var Laya=window.Laya=(function(window,document){
 			var MediaStreamTrack=Browser.window.MediaStreamTrack;
 			DebugTxt.dTrace("navigator.getUserMedia"+navigator.getUserMedia);
 			DebugTxt.dTrace("MediaStreamTrack2",Browser.window.MediaStreamTrack);
-			var key;
-			for (key in MediaStreamTrack){
-				DebugTxt.dTrace(key,MediaStreamTrack[key]);
+			if (MediaStreamTrack && MediaStreamTrack.getSources){
+				}else{
+				LayaArTool.initCamaraVideo(video,handler);
+				return;
 			}
 			DebugTxt.dTrace("MediaStreamTrack.getSources",Browser.window.MediaStreamTrack.getSources);
 			if (navigator.getUserMedia){
@@ -34035,7 +34036,12 @@ var Laya=window.Laya=(function(window,document){
 		LayaArTool.initCamaraNew2=function(video,handler){
 			var exArray=[];
 			var navigator=Browser.window.navigator;
-			navigator.mediaDevices.enumerateDevices().then(gotDevices);
+			if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices){
+				LayaArTool.initCamaraNew(video,handler);
+				return;
+				}else{
+				navigator.mediaDevices.enumerateDevices().then(gotDevices);
+			};
 			var audioArray=[];
 			function gotDevices (deviceInfos){
 				for (var i=0;i!==deviceInfos.length;++i){
@@ -72067,12 +72073,7 @@ var Laya=window.Laya=(function(window,document){
 				LayaArTool.initVideoBySrc(this.video,"Data/output_4.ogg",completeHandler);
 			}
 			else {
-				if (Browser.onWeiXin){
-					LayaArTool.initCamaraNew2(this.video,completeHandler);
-				}
-				else {
-					LayaArTool.initCamaraVideo(this.video,completeHandler);
-				}
+				LayaArTool.initCamaraNew2(this.video,completeHandler);
 			}
 		}
 

@@ -34041,7 +34041,7 @@ var Laya=window.Laya=(function(window,document){
 				for (var i=0;i!==deviceInfos.length;++i){
 					var deviceInfo=deviceInfos[i];
 					if (deviceInfo.kind==='audioinput'){
-						audioArray.push(deviceInfo.label || 'microphone '+(audioArray.length+1));
+						audioArray.push(deviceInfo.deviceId || 'microphone '+(audioArray.length+1));
 					}
 					else if (deviceInfo.kind==='videoinput'){
 						var key;
@@ -34055,14 +34055,12 @@ var Laya=window.Laya=(function(window,document){
 					}
 				}
 				DebugTxt.dTrace("deviceId:",exArray[1]);
-				var mediaCfg;
-				mediaCfg={'video':{deviceId:{exact:exArray[1] }},'audio':false };
-				mediaCfg={'video':{'optional':[{'deviceId':exArray[1]}],'audio':false}};
-				DebugTxt.dTrace("navigator.getUserMedia");
-				navigator.getUserMedia(mediaCfg,function(stream){
-					DebugTxt.dTrace("onCamaraOk");
+				var constraints={audio:{deviceId:{exact:audioArray[0]}},video:{deviceId:{exact:exArray[0]}}};
+				navigator.mediaDevices.getUserMedia(constraints).then(gotStream);
+				function gotStream (stream){
+					DebugTxt.dTrace("gotStream");
 					LayaArTool.onCamaraOk(video,stream,handler);
-				},LayaArTool.onCamaraErr);
+				}
 			}
 		}
 

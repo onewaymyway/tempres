@@ -34047,14 +34047,12 @@ var Laya=window.Laya=(function(window,document){
 						console.log('Found one other kind of source/device: ',deviceInfo);
 					}
 				}
-				if (navigator.getUserMedia){
-					var mediaCfg;
-					mediaCfg={'video':{'optional':[{'deviceId':exArray[1]}],'audio':false}}
-					DebugTxt.dTrace("navigator.getUserMedia");
-					navigator.getUserMedia(mediaCfg,function(stream){
-						DebugTxt.dTrace("onCamaraOk");
-						LayaArTool.onCamaraOk(video,stream,handler);
-					},LayaArTool.onCamaraErr);
+				DebugTxt.dTrace("deviceId:",exArray[1]);
+				var constraints={video:{deviceId:{exact:exArray[1]}}};
+				navigator.mediaDevices.getUserMedia(constraints).then(gotStream);
+				function gotStream (stream){
+					video.srcObject=stream;
+					handler.runWith(video);
 				}
 			}
 		}

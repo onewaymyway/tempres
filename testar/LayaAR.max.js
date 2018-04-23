@@ -34048,7 +34048,7 @@ var Laya=window.Laya=(function(window,document){
 						for (key in deviceInfo){
 							DebugTxt.dTrace(key,deviceInfo[key]);
 						}
-						exArray.push(deviceInfo.label || 'camera '+(exArray.length+1));
+						exArray.push(deviceInfo.deviceId || 'camera '+(exArray.length+1));
 					}
 					else {
 						console.log('Found one other kind of source/device: ',deviceInfo);

@@ -72060,7 +72060,6 @@ var Laya=window.Laya=(function(window,document){
 			console.log("size:",this.video.videoWidth,this.video.videoHeight);
 			Laya.stage.size(this.video.videoWidth *Browser.pixelRatio,this.video.videoHeight *Browser.pixelRatio);
 			this.arController=new ARController(this.video.videoWidth *cScale,this.video.videoHeight *cScale,this.camaraParam);
-			return;
 			var mode;
 			mode=artoolkit.AR_MATRIX_CODE_DETECTION;
 			this.arController.setPatternDetectionMode(mode);

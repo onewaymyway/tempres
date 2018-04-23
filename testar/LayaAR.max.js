@@ -34006,7 +34006,7 @@ var Laya=window.Laya=(function(window,document){
 			var navigator=Browser.window.navigator;
 			var MediaStreamTrack=Browser.window.MediaStreamTrack;
 			DebugTxt.dTrace("navigator.getUserMedia"+navigator.getUserMedia);
-			DebugTxt.dTrace("MediaStreamTrack",Browser.window.MediaStreamTrack);
+			DebugTxt.dTrace("MediaStreamTrack2",Browser.window.MediaStreamTrack);
 			var key;
 			for (key in MediaStreamTrack){
 				DebugTxt.dTrace(key,MediaStreamTrack[key]);

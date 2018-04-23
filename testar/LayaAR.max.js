@@ -34039,8 +34039,6 @@ var Laya=window.Laya=(function(window,document){
 			function gotDevices (deviceInfos){
 				for (var i=0;i!==deviceInfos.length;++i){
 					var deviceInfo=deviceInfos[i];
-					var option=/*no*/this.document.createElement('option');
-					option.value=deviceInfo.deviceId;
 					if (deviceInfo.kind==='audioinput'){}
 						else if (deviceInfo.kind==='videoinput'){
 						exArray.push(deviceInfo.label || 'camera '+(exArray.length+1));
@@ -34051,7 +34049,7 @@ var Laya=window.Laya=(function(window,document){
 				}
 				if (navigator.getUserMedia){
 					var mediaCfg;
-					mediaCfg={'video':{'optional':[{'sourceId':exArray[1]}],'audio':false}}
+					mediaCfg={'video':{'optional':[{'deviceId':exArray[1]}],'audio':false}}
 					DebugTxt.dTrace("navigator.getUserMedia");
 					navigator.getUserMedia(mediaCfg,function(stream){
 						DebugTxt.dTrace("onCamaraOk");
@@ -72174,8 +72172,3 @@ var Laya=window.Laya=(function(window,document){
 	new test.TestAr3D();
 
 })(window,document,Laya);
-
-
-/*
-1 file:///E:/wangwei/codes/laya/libs/LayaAir/plugins/artoolkit/src/LayaArTool.as (72):warning:document.createElement This variable is not defined.
-*/

@@ -34052,7 +34052,8 @@ var Laya=window.Laya=(function(window,document){
 				}
 				DebugTxt.dTrace("deviceId:",exArray[1]);
 				var mediaCfg;
-				mediaCfg={'video':{deviceId:{exact:exArray[1]}},'audio':false};
+				mediaCfg={'video':{deviceId:{exact:exArray[1] }},'audio':false };
+				mediaCfg={'video':{deviceId:{exact:"camera2"}},'audio':false};
 				DebugTxt.dTrace("navigator.getUserMedia");
 				navigator.getUserMedia(mediaCfg,function(stream){
 					DebugTxt.dTrace("onCamaraOk");

@@ -72047,6 +72047,7 @@ var Laya=window.Laya=(function(window,document){
 		__proto.beginWork=function(video){
 			this.video=video;
 			video.play();
+			return;
 			this.camaraParam=new ARCameraParam();
 			this.camaraParam.onload=Utils.bind(this.camaraLoaded,this);
 			this.camaraParam.load("Data/camera_para.dat");

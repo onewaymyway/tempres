@@ -34058,7 +34058,7 @@ var Laya=window.Laya=(function(window,document){
 					LayaArTool.onCamaraOk(video,stream,handler);
 				}
 				function handleError (error){
-					alert('Error: '+error);
+					alert('Error: '+error+error.message);
 				}
 			}
 		}

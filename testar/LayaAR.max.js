@@ -34022,19 +34022,42 @@ var Laya=window.Laya=(function(window,document){
 						}
 					};
 					var mediaCfg;
-					mediaCfg={
-						'video':{
-							'optional':[
-							{'sourceId':exArray[1]
-							}],
-							'audio':false }
-					}
+					mediaCfg={'video':{'optional':[{'sourceId':exArray[1]}],'audio':false}}
 					DebugTxt.dTrace("navigator.getUserMedia");
 					navigator.getUserMedia(mediaCfg,function(stream){
 						DebugTxt.dTrace("onCamaraOk");
 						LayaArTool.onCamaraOk(video,stream,handler);
 					},LayaArTool.onCamaraErr);
 				});
+			}
+		}
+
+		LayaArTool.initCamaraNew2=function(video,handler){
+			var exArray=[];
+			var navigator=Browser.window.navigator;
+			navigator.mediaDevices.enumerateDevices().then(gotDevices);
+			function gotDevices (deviceInfos){
+				for (var i=0;i!==deviceInfos.length;++i){
+					var deviceInfo=deviceInfos[i];
+					var option=/*no*/this.document.createElement('option');
+					option.value=deviceInfo.deviceId;
+					if (deviceInfo.kind==='audioinput'){}
+						else if (deviceInfo.kind==='videoinput'){
+						exArray.push(deviceInfo.label || 'camera '+(exArray.length+1));
+					}
+					else {
+						console.log('Found one other kind of source/device: ',deviceInfo);
+					}
+				}
+				if (navigator.getUserMedia){
+					var mediaCfg;
+					mediaCfg={'video':{'optional':[{'sourceId':exArray[1]}],'audio':false}}
+					DebugTxt.dTrace("navigator.getUserMedia");
+					navigator.getUserMedia(mediaCfg,function(stream){
+						DebugTxt.dTrace("onCamaraOk");
+						LayaArTool.onCamaraOk(video,stream,handler);
+					},LayaArTool.onCamaraErr);
+				}
 			}
 		}
 
@@ -72043,7 +72066,7 @@ var Laya=window.Laya=(function(window,document){
 			}
 			else {
 				if (Browser.onWeiXin){
-					LayaArTool.initCamaraNew(this.video,completeHandler);
+					LayaArTool.initCamaraNew2(this.video,completeHandler);
 				}
 				else {
 					LayaArTool.initCamaraVideo(this.video,completeHandler);
@@ -72151,3 +72174,8 @@ var Laya=window.Laya=(function(window,document){
 	new test.TestAr3D();
 
 })(window,document,Laya);
+
+
+/*
+1 file:///E:/wangwei/codes/laya/libs/LayaAir/plugins/artoolkit/src/LayaArTool.as (72):warning:document.createElement This variable is not defined.
+*/

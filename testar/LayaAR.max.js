@@ -34055,7 +34055,7 @@ var Laya=window.Laya=(function(window,document){
 					}
 				}
 				DebugTxt.dTrace("deviceId:",exArray[1]);
-				var constraints={audio:{deviceId:{exact:audioArray[0]}},video:{deviceId:{exact:exArray[1]}}};
+				var constraints={audio:false,video:{deviceId:{exact:exArray[1]}}};
 				navigator.mediaDevices.getUserMedia(constraints).then(gotStream);
 				function gotStream (stream){
 					DebugTxt.dTrace("gotStream");

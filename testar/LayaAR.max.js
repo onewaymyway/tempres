@@ -34051,6 +34051,7 @@ var Laya=window.Laya=(function(window,document){
 				var constraints={video:{deviceId:{exact:exArray[1]}}};
 				navigator.mediaDevices.getUserMedia(constraints).then(gotStream);
 				function gotStream (stream){
+					DebugTxt.dTrace("gotStream:",stream);
 					video.srcObject=stream;
 					handler.runWith(video);
 				}
